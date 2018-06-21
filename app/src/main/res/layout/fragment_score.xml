@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ScoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,13 +12,24 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="90dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fire" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -25,36 +37,59 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NombreJugador" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textScore"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Score:" />
+            android:layout_weight="0.8"
+            android:gravity="bottom|center_vertical">
 
-        <TextView
-            android:id="@+id/textvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="value" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textErrores"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_light"
-            android:text="Errores:" />
+                <TextView
+                    android:id="@+id/textScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Score:" />
 
-        <TextView
-            android:id="@+id/textValueErrores"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_red_light"
-            android:text="txtValue" />
+                <TextView
+                    android:id="@+id/textErrores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_light"
+                    android:text="Errores:"
+                    tools:targetApi="ice_cream_sandwich" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textvalue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="value" />
+
+                <TextView
+                    android:id="@+id/textValueErrores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_light"
+                    android:text="txtValue"
+                    tools:targetApi="ice_cream_sandwich" />
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
 </FrameLayout>

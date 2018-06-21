@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parently"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dragdrop_demo.MainActivity">
+
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="com.dragdrop_demo.ScoreFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/r01"
@@ -12,7 +19,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/r1"
@@ -35,12 +43,13 @@
 
     <LinearLayout
         android:id="@+id/top_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/blue"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/animal1"
@@ -87,11 +96,12 @@
 
     <LinearLayout
         android:id="@+id/r02"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/r3"
@@ -110,6 +120,7 @@
             android:background="@color/colorAccent"
             android:gravity="center"
             android:orientation="vertical" />
+
     </LinearLayout>
 
 
