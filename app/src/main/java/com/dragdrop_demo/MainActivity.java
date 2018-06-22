@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
             grid = (GridLayout) findViewById(R.id.top_layout);
         }
         GeneratorGame gen= new GeneratorGame(this);
-        int column=2;
-        ArrayList<LinearLayout> columns=gen.GenerateColumns(column,3);
+        int column=1;
+        ArrayList<LinearLayout> columns=gen.GenerateColumns(column,2);
         for (int x = 0; x < column; x++)
         {
             grid.addView(columns.get(x));
