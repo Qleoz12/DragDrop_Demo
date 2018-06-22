@@ -18,13 +18,15 @@ public class GeneratorGame {
         for (int x = 0; x < numberColumns; x++)
         {
             LinearLayout parent = new LinearLayout(activity);
-            parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+
             parent.setOrientation(LinearLayout.VERTICAL);
             for (int y = 0; y < numberRows; y++)
             {
                 ImageView iv = new ImageView(activity);
-                iv.setMaxWidth(50);
-                iv.setMaxHeight(50);
+                iv.requestLayout();
+                iv.getLayoutParams().height=50;
+                iv.getLayoutParams().width=50;
                 iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 if ( Math.round( Math.random())>0)
                 {

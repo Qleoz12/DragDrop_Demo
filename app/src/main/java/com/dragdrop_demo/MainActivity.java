@@ -52,19 +52,17 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
 
     //Find all views and set Tag to all draggable views
     private void findViews() {
+        int column=1;
+        int row=3;
 
         GridLayout grid= null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            grid = (GridLayout) findViewById(R.id.top_layout);
-        }
-        else
-        {
-            grid = (GridLayout) findViewById(R.id.top_layout);
-        }
+        grid = (GridLayout) findViewById(R.id.top_layout);
+        grid.removeAllViews();
+        grid.setColumnCount(column);
+        grid.setRowCount(row + 1);
         GeneratorGame gen= new GeneratorGame(this);
-        int column=1;
-        ArrayList<LinearLayout> columns=gen.GenerateColumns(column,2);
-        for (int x = 0; x < column; x++)
+        ArrayList<LinearLayout> columns=gen.GenerateColumns(column,row);
+        for (int x = 0; x < columns.size(); x++)
         {
             grid.addView(columns.get(x));
         }
