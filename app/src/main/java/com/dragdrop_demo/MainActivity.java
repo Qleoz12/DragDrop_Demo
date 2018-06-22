@@ -1,24 +1,31 @@
 package com.dragdrop_demo;
 
+
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnDragListener, View.OnLongClickListener{
+import com.dragdrop_demo.Controller.GeneratorGame;
+
+import java.util.ArrayList;
+
+
+public class MainActivity extends AppCompatActivity implements View.OnDragListener, ScoreFragment.OnFragmentInteractionListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -38,29 +45,30 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-        implementEvents();
+        //implementEvents();
+        DataHolder.getInstance().setScore(0);
+        DataHolder.getInstance().setScoreErrore(0);
     }
 
     //Find all views and set Tag to all draggable views
     private void findViews() {
 
-        imageView1 = (ImageView) findViewById(R.id.animal1);
-        imageView1.setTag(IMAGE_VIEW_TAG);
+        GridLayout grid= null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            grid = (GridLayout) findViewById(R.id.top_layout);
+        }
+        else
+        {
+            grid = (GridLayout) findViewById(R.id.top_layout);
+        }
+        GeneratorGame gen= new GeneratorGame(this);
+        int column=2;
+        ArrayList<LinearLayout> columns=gen.GenerateColumns(column,3);
+        for (int x = 0; x < column; x++)
+        {
+            grid.addView(columns.get(x));
+        }
 
-        imageView2 = (ImageView) findViewById(R.id.animal2);
-        imageView2.setTag(IMAGE_VIEW_TAG2);
-
-        imageView3 = (ImageView) findViewById(R.id.animal3);
-        imageView3.setTag(IMAGE_VIEW_TAG);
-
-        imageView4 = (ImageView) findViewById(R.id.animal4);
-        imageView4.setTag(IMAGE_VIEW_TAG2);
-
-        imageView5 = (ImageView) findViewById(R.id.animal5);
-        imageView5.setTag(IMAGE_VIEW_TAG);
-
-        imageView6 = (ImageView) findViewById(R.id.animal6);
-        imageView6.setTag(IMAGE_VIEW_TAG2);
 
     }
 
@@ -68,10 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
     //Implement long click and drag listener
     private void implementEvents() {
         //add or remove any view that you don't want to be dragged
-
-
-
-
         //add or remove any layout view that you don't want to accept dragged view
         findViewById(R.id.top_layout).setOnDragListener(this);
         findViewById(R.id.r1).setOnDragListener(this);
@@ -90,48 +94,6 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
 
     }
 
-    @Override
-    public boolean onLongClick(View view)
-    {
-        // Displays a message containing the dragged data.
-        Toast.makeText(this, "fire longclic" , Toast.LENGTH_SHORT).show();
-        // Create a new ClipData.
-        // This is done in two steps to provide clarity. The convenience method
-        // ClipData.newPlainText() can create a plain text ClipData in one step.
-
-        // Create a new ClipData.Item from the ImageView object's tag
-        ClipData.Item item = new ClipData.Item((CharSequence) view.getTag());
-
-        // Create a new ClipData using the tag as a label, the plain text MIME type, and
-        // the already-created item. This will create a new ClipDescription object within the
-        // ClipData, and set its MIME type entry to "text/plain"
-        String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-
-        ClipData data = new ClipData(view.getTag().toString(), mimeTypes, item);
-
-        // Instantiates the drag shadow builder.
-        View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-
-        // Starts the drag
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            view.startDragAndDrop(data//data to be dragged
-                    , shadowBuilder //drag shadow
-                    , view//local data about the drag and drop operation
-                    , 0//no needed flags
-            );
-        } else {
-            view.startDrag(data//data to be dragged
-                    , shadowBuilder //drag shadow
-                    , view//local data about the drag and drop operation
-                    , 0//no needed flags
-            );
-        }
-
-
-        //Set view visibility to INVISIBLE as we are going to drag the view
-        view.setVisibility(View.INVISIBLE);
-        return true;
-    }
 
 
 
@@ -210,15 +172,36 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     View v = (View) event.getLocalState();
                     ViewGroup owner = (ViewGroup) v.getParent();
                     owner.removeView(v);//remove the dragged view
-
                     container.addView(v);//Add the dragged view
                     v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+                    //score
+                    //if you added fragment via layout xml
+                    android.app.Fragment tt=getFragmentManager().findFragmentById(R.id.fragment);
+                    ScoreFragment tx=(ScoreFragment) tt;
+                    DataHolder.getInstance().setScore(DataHolder.getInstance().getScore()+1);
+                    tx.setScoreG(""+DataHolder.getInstance().getScore());
 
+                }
+                else if (namelayoiut.equals("r2") && dragData.equals(IMAGE_VIEW_TAG))
+                {
+                    View v = (View) event.getLocalState();
+                    ViewGroup owner = (ViewGroup) v.getParent();
+                    owner.removeView(v);//remove the dragged view
+                    container.addView(v);//Add the dragged view
+                    v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+                    //score
+                    //if you added fragment via layout xml
+                    android.app.Fragment tt=getFragmentManager().findFragmentById(R.id.fragment);
+                    ScoreFragment tx=(ScoreFragment) tt;
+                    DataHolder.getInstance().setScore(DataHolder.getInstance().getScore()+1);
+                    tx.setScoreG(""+DataHolder.getInstance().getScore());
                 }
                 else
                 {
                     View v = (View) event.getLocalState();
                     v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+                    //set error
+                    DataHolder.getInstance().setScoreErrore(DataHolder.getInstance().getScoreErrore()+1);
                 }
                 return true;
             case DragEvent.ACTION_DRAG_ENDED:
@@ -299,4 +282,12 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
             return true;
         }
     };
+
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
 }
