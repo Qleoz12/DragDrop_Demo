@@ -66,7 +66,7 @@
             android:orientation="vertical" />
     </LinearLayout>
 
-    <GridLayout
+    <LinearLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -74,9 +74,9 @@
         android:background="@color/blue"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="visible">
+       >
 
-    </GridLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/r02"

@@ -25,7 +25,8 @@ import com.dragdrop_demo.Controller.GeneratorGame;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnDragListener, ScoreFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements View.OnDragListener, ScoreFragment.OnFragmentInteractionListener,View.OnClickListener
+{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -36,12 +37,14 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
     private ImageView imageView5;
     private ImageView imageView6;
 
-    private static final String IMAGE_VIEW_TAG = "LAUNCHER LOGO";
-    private static final String IMAGE_VIEW_TAG2 = "animal";
+    private static final String IMAGE_VIEW_TAG = "Number";
+    private static final String IMAGE_VIEW_TAG2 = "Animal";
 
+    LinearLayout grid= null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
@@ -52,43 +55,49 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
 
     //Find all views and set Tag to all draggable views
     private void findViews() {
-        int column=1;
+        int column=2;
         int row=3;
 
-        GridLayout grid= null;
-        grid = (GridLayout) findViewById(R.id.top_layout);
+
+        grid = (LinearLayout) findViewById(R.id.top_layout);
         grid.removeAllViews();
-        grid.setColumnCount(column);
-        grid.setRowCount(row + 1);
+
         GeneratorGame gen= new GeneratorGame(this);
         ArrayList<LinearLayout> columns=gen.GenerateColumns(column,row);
         for (int x = 0; x < columns.size(); x++)
         {
+
+            implementEvents(columns.get(x));
             grid.addView(columns.get(x));
+            /*LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams) columns.get(x).getLayoutParams();
+            LinearLayout.LayoutParams lParamsson= (LinearLayout.LayoutParams) columns.get(x).getChildAt(0).getLayoutParams();
+            System.out.println("su peso hijos es: "+ lParamsson.weight);
+            ImageView im=(ImageView) columns.get(x).getChildAt(0);
+            System.out.println("su crop hijos es: "+ im.getScaleType());
+            System.out.println("su peso columnas es: "+lParams.weight);*/
         }
 
+        //LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams) grid.getLayoutParams();
+        //System.out.println("su peso es: "+lParams.weight);
 
     }
 
 
     //Implement long click and drag listener
-    private void implementEvents() {
+    private void implementEvents(LinearLayout linearLayout) {
         //add or remove any view that you don't want to be dragged
         //add or remove any layout view that you don't want to accept dragged view
+        //Implement long click and drag listener
+        for (int x = 0; x < linearLayout.getChildCount(); x++)
+        {
+            linearLayout.getChildAt(x).setOnTouchListener(handleTouch);
+        }
+
         findViewById(R.id.top_layout).setOnDragListener(this);
         findViewById(R.id.r1).setOnDragListener(this);
         findViewById(R.id.r2).setOnDragListener(this);
         findViewById(R.id.r3).setOnDragListener(this);
         findViewById(R.id.r4).setOnDragListener(this);
-
-
-        imageView1.setOnTouchListener(handleTouch);
-        imageView2.setOnTouchListener(handleTouch);
-        imageView3.setOnTouchListener(handleTouch);
-        imageView4.setOnTouchListener(handleTouch);
-        imageView5.setOnTouchListener(handleTouch);
-        imageView6.setOnTouchListener(handleTouch);
-
 
     }
 
@@ -199,7 +208,13 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     View v = (View) event.getLocalState();
                     v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
                     //set error
+                    //score
+                    //if you added fragment via layout xml
+                    android.app.Fragment tt=getFragmentManager().findFragmentById(R.id.fragment);
+                    ScoreFragment tx=(ScoreFragment) tt;
                     DataHolder.getInstance().setScoreErrore(DataHolder.getInstance().getScoreErrore()+1);
+                    tx.setScoreE(""+DataHolder.getInstance().getScoreErrore());
+
                 }
                 return true;
             case DragEvent.ACTION_DRAG_ENDED:
@@ -283,9 +298,22 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(Uri uri)
+    {
 
     }
 
 
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.top_layout:
+
+                System.out.println("su peso es: "+grid.getWeightSum());
+            default:
+                System.out.println("no es lo que buscas");
+        }
+    }
 }
