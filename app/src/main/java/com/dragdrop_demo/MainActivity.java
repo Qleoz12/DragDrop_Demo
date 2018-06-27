@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.dragdrop_demo.Controller.GeneratorGame;
+import com.dragdrop_demo.Controller.SoundManager;
 
 import java.util.ArrayList;
 
@@ -187,6 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     ScoreFragment tx=(ScoreFragment) tt;
                     DataHolder.getInstance().setScore(DataHolder.getInstance().getScore()+1);
                     tx.setScoreG(""+DataHolder.getInstance().getScore());
+                    //sound
+                    SoundManager.getInstance().setActivity(this);
+                    SoundManager.getInstance().play_success();
 
                 }
                 else if (namelayoiut.equals("r2") && dragData.equals(IMAGE_VIEW_TAG))
@@ -202,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     ScoreFragment tx=(ScoreFragment) tt;
                     DataHolder.getInstance().setScore(DataHolder.getInstance().getScore()+1);
                     tx.setScoreG(""+DataHolder.getInstance().getScore());
+                    //sound
+                    SoundManager.getInstance().setActivity(this);
+                    SoundManager.getInstance().play_success();
                 }
                 else
                 {
@@ -214,6 +221,9 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     ScoreFragment tx=(ScoreFragment) tt;
                     DataHolder.getInstance().setScoreErrore(DataHolder.getInstance().getScoreErrore()+1);
                     tx.setScoreE(""+DataHolder.getInstance().getScoreErrore());
+                    //sound
+                    SoundManager.getInstance().setActivity(this);
+                    SoundManager.getInstance().play_error();
 
                 }
                 return true;
@@ -282,7 +292,10 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     );
 
                     //Set view visibility to INVISIBLE as we are going to drag the view
-                    view.setVisibility(View.INVISIBLE);
+                    if ()
+                    {
+                        view.setVisibility(View.INVISIBLE);
+                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.i("TAG", "moving: (" + x + ", " + y + ")");
